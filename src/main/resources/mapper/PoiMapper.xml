@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ai.gis.mapper.PoiMapper">
+
+    <select id="findNearbyPois" resultType="com.ai.gis.entity.PoiLocation">
+        SELECT
+        id, name, category,
+        ST_X(geom) AS longitude,
+        ST_Y(geom) AS latitude
+        FROM poi_locations
+        WHERE ST_DWithin(
+        geom,
+        ST_SetSRID(ST_MakePoint(#{longitude}, #{latitude}), 4326),
+        #{radiusInMeters} / 111320 -- 粗略将米转换为度，精确计算可使用 geography 类型
+        )
+        LIMIT 10;
+    </select>
+
+</mapper>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ai.gis.mapper.ChatSessionMapper">
+
+    <select id="insertChatSession" parameterType="com.ai.gis.entity.ChatSession">
+        INSERT IGNORE INTO chat_sessions (session_id, user_id, title, created_time)
+        SELECT #{sessionId}, #{userId}, #{title}, NOW()
+        FROM DUAL
+        WHERE NOT EXISTS (
+        SELECT 1 FROM chat_sessions WHERE session_id = #{sessionId}
+        )
+    </select>
+
+    <select id="getSessionsByUserId" resultType="com.ai.gis.entity.ChatSession">
+        SELECT session_id, user_id, title, created_time
+        FROM chat_sessions
+        WHERE user_id = #{userId}
+        ORDER BY created_time DESC
+    </select>
+
+</mapper>
