@@ -52,3 +52,7 @@ spring:
           connections:
             weather-server:
               url: http://localhost:8080
+amap:
+  key: 您的真实高德API_Key
+  baseUrl: https://restapi.amap.com/v3
+  baseUrl2: https://restapi.amap.com/v5

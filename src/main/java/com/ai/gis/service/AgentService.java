@@ -1,6 +1,5 @@
 package com.ai.gis.service;
 
-import com.ai.gis.function.GisFunctions;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.memory.ChatMemory;
 import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
@@ -21,7 +20,7 @@ public class AgentService {
 
     public AgentService(ChatClient.Builder chatClientBuilder,
                         ChatMemory chatMemory,
-                        GisFunctions gisFunctions) { // 直接注入你的 GisFunctions 实例
+                        PoiService gisFunctions) { // 直接注入你的 GisFunctions 实例
 
         this.chatClient = chatClientBuilder
                 .defaultSystem("你是一个专业的 GIS AI 助手。你可以利用地理空间工具（如查询周边设施）来回答用户的地理空间相关问题。请用友好、简洁的语言回复。")
@@ -47,7 +46,7 @@ public class AgentService {
         return chatClient.prompt()
                 .user(userMessage)
                 // 严格使用接口中定义的原生常量 ChatMemory.CONVERSATION_ID
-                .advisors(a -> a.param(ChatMemory.CONVERSATION_ID, conversationId))
+                .advisors(a -> a.param(ChatMemory.CONVERSATION_ID, conversationId).param("userId", userId))
                 .call()
                 .content();
     }

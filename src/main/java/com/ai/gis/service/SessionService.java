@@ -1,6 +1,5 @@
 package com.ai.gis.service;
 
-
 import com.ai.gis.entity.ChatSession;
 import com.ai.gis.mapper.ChatSessionMapper;
 import org.springframework.stereotype.Service;
@@ -23,12 +22,10 @@ public class SessionService {
         session.setUserId(userId);
         session.setTitle(title);
         session.setCreatedTime(LocalDateTime.now());
-        int affectedRows = chatSessionMapper.insertChatSession(session);
-        return affectedRows;
+        return chatSessionMapper.insertChatSession(session);
     }
 
     public List<ChatSession> getSessionByUser(String userId){
-        List<ChatSession> sessions = chatSessionMapper.getSessionsByUserId(userId);
-        return sessions;
+        return chatSessionMapper.getSessionsByUserId(userId);
     }
 }

@@ -1,17 +1,18 @@
-package com.ai.gis.function;
+package com.ai.gis.service;
 
 import com.ai.gis.entity.PoiLocation;
 import com.ai.gis.mapper.PoiMapper;
-import org.springframework.ai.tool.annotation.Tool; // 引入 Spring AI 1.1.x 的 Tool 注解
-import org.springframework.stereotype.Component;
+import org.springframework.ai.tool.annotation.Tool;
+import org.springframework.stereotype.Service;
+
 import java.util.List;
 
-@Component
-public class GisFunctions {
+@Service
+public class PoiService {
 
     private final PoiMapper poiMapper;
 
-    public GisFunctions(PoiMapper poiMapper) {
+    public PoiService(PoiMapper poiMapper) {
         this.poiMapper = poiMapper;
     }
 
@@ -29,17 +30,4 @@ public class GisFunctions {
                 request.radiusInMeters()
         );
     }
-
-    @Tool(
-            name = "getRoutePlanning",
-            description = "查两点之间的路线规划，如从天安门到王府井怎么走？"
-    )
-    public List<PoiLocation> getRoutePlanning(Request request) {
-        return poiMapper.findNearbyPois(
-                request.longitude(),
-                request.latitude(),
-                request.radiusInMeters()
-        );
-    }
-    //getRoutePlanning（）
 }

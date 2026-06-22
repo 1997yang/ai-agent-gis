@@ -1,4 +1,23 @@
 
+
+## 开发文档
+https://docs.springframework.org.cn/spring-ai/reference/api/structured-output-converter.html
+## 
+Spring AI Tool 实际流程
+```mermaid
+LLM 调用 tool
+↓
+Java 方法执行
+↓
+返回 POJO
+↓
+Spring Jackson 序列化 JSON
+↓
+塞回 LLM 上下文
+```
+
+
+
 ## 相关表
 ```roomsql
 CREATE TABLE chat_sessions (
